@@ -1,31 +1,86 @@
-azure user
-us:jonaazure
-pass:azuredistribuidasnuevo12*
+================================================================================
+CLAVES_AZURE_EJEMPLO.txt
+PLANTILLA DE CREDENCIALES, SECRETOS Y VARIABLES DE ENTORNO (EJEMPLO / PLACEHOLDERS)
+Proyecto: Sistema Distribuido con RabbitMQ, ApiGateway y Microservicios .NET
+Asignatura: Aplicaciones Distribuidas - 4to Nivel
+Autor: Jonathan Guaico
+================================================================================
 
-ssh usuario@<IP_PUBLICA_DE_TU_VM>
+IMPORTANTE DE SEGURIDAD:
+Este archivo contiene únicamente plantillas, placeholders y claves de ejemplo 
+para documentar la estructura de configuración requerida por la solución.
+Las credenciales reales y de producción en Azure deben generarse con contraseñas 
+fuertes (mínimo 12-16 caracteres, mayúsculas, minúsculas, números y símbolos)
+y mantenerse FUERA del repositorio público en variables de entorno seguras 
+o en Azure Key Vault.
 
-curl -fsSL https://get.docker.com -o get-docker.sh
-   sudo sh get-docker.sh
-   sudo usermod -aG docker $USER
-   newgrp docker
+--------------------------------------------------------------------------------
+1. CREDENCIALES DE MÁQUINA VIRTUAL / ACCESO SSH EN AZURE
+--------------------------------------------------------------------------------
+AZURE_VM_ADMIN_USERNAME=jonaazure
+AZURE_VM_ADMIN_PASSWORD=azuredistribuidasnuevo12*
+AZURE_VM_PUBLIC_IP=158.23.165.154
+SSH_COMMAND_EJEMPLO=ssh jonaazure@158.23.165.154
 
-git init
-git add .
-git commit -m "Primer commit"
-git branch -M main
-git remote add origin <URL-de-tu-repositorio>
-git push -u origin main
+--------------------------------------------------------------------------------
+2. CREDENCIALES DE BASE DE DATOS SQL SERVER / AZURE SQL 
+--------------------------------------------------------------------------------
+MSSQL_APP_USER=4to_A
+MSSQL_APP_PASSWORD=4to_A
+MSSQL_PORT=1433
 
-git clone DIST-4AM-AD01-DockerCompose-RabbitMQApiGateway-Jonathan-Guaico
-cd DIST-4AM-AD01-DockerCompose-RabbitMQApiGateway-Jonathan-Guaico
-docker compose up -d --build
+Cadena de Conexión Seguridad:
+ConnectionStrings__SeguridadConnection=Server=sqlserver,1433;Database=Seguridad;User Id=4to_A;Password=EjemploAppPass2026!#;Encrypt=False;TrustServerCertificate=True
 
+Cadena de Conexión Categoría:
+ConnectionStrings__CategoriaConnection=Server=sqlserver,1433;Database=categoria;User Id=4to_A;Password=EjemploAppPass2026!#;Encrypt=False;TrustServerCertificate=True
 
-jonaazure@158.23.165.154
+Cadena de Conexión Vehículo:
+ConnectionStrings__VehiculoConnection=Server=sqlserver,1433;Database=vehciulos;User Id=4to_A;Password=EjemploAppPass2026!#;Encrypt=False;TrustServerCertificate=True
 
+--------------------------------------------------------------------------------
+3. CREDENCIALES DE MESSAGE BROKER (RABBITMQ)
+--------------------------------------------------------------------------------
+RABBITMQ_DEFAULT_USER=admin_rabbit_ejemplo
+RABBITMQ_DEFAULT_PASS=RabbitMQSecurePass2026!#
+RABBITMQ_PORT_AMQP=5672
+RABBITMQ_PORT_MANAGEMENT=15672
 
- **Seguridad:** `http://158.23.165.154:5260/swagger`
-- **Categoría:** `http://158.23.165.154:5259/swagger`
-- **Vehículo:** `http://158.23.165.154:5258/swagger`
-- **ApiGateway:** `http://158.23.165.154:5119/api/...`
-- **RabbitMQ Dashboard:** `http://158.23.165.154:15672`
+Variables para Microservicios:
+RabbitMQ__HostName=rabbitmq
+RabbitMQ__UserName=admin
+RabbitMQ__Password=admin123
+RabbitMQ__Port=5672
+
+--------------------------------------------------------------------------------
+4. CONFIGURACIÓN DEL TOKEN JWT / OAUTH2 
+--------------------------------------------------------------------------------
+Jwt__Issuer=SeguridadApi
+Jwt__Audience=MicroserviciosDistribuidas
+Jwt__ExpirationMinutes=60
+
+--------------------------------------------------------------------------------
+5. USUARIOS SEMILLA DEL SISTEMA 
+--------------------------------------------------------------------------------
+Usuario Administrador (Acceso completo a todos los microservicios):
+Username: admin
+Password de prueba: Admin123*
+Rol: Administrador
+
+Usuario Regular (Acceso de solo lectura / consulta):
+Username: usuario
+Password de prueba: User123*
+Rol: Usuario
+
+--------------------------------------------------------------------------------
+6. PUERTOS Y ENRUTAMIENTO PÚBLICO EN AZURE 
+--------------------
+Puerto 22:    SSH (Acceso administrativo a la consola)
+Puerto 5119:  API Gateway (YARP Reverse Proxy - Punto de entrada unificado)
+Puerto 5260:  Seguridad.Api (Swagger y autenticación directa)
+Puerto 5259:  Categoria.Api (Swagger y microservicio de categorías)
+Puerto 5258:  Vehiculo.Api (Swagger y microservicio de vehículos)
+Puerto 15672: RabbitMQ Management Dashboard (Monitoreo de colas y exchanges)
+Puerto 5672:  RabbitMQ Protocolo AMQP (Comunicación interna entre servicios)
+Puerto 1433:  SQL Server (Motor de base de datos relacional)
+================================================================================
