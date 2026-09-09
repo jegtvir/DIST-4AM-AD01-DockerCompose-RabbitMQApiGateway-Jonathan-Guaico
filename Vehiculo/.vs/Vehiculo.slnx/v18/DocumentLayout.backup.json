@@ -1,0 +1,125 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|c:\\users\\user\\desktop\\universidad\\4to\\distribuidas\\deberrabbitmq\\vehiculo\\vehiculo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|solutionrelative:vehiculo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|c:\\users\\user\\desktop\\universidad\\4to\\distribuidas\\deberrabbitmq\\vehiculo\\vehiculo.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|solutionrelative:vehiculo.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|c:\\users\\user\\desktop\\universidad\\4to\\distribuidas\\deberrabbitmq\\vehiculo\\vehiculo.api\\models\\vehiculos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|solutionrelative:vehiculo.api\\models\\vehiculos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|c:\\users\\user\\desktop\\universidad\\4to\\distribuidas\\deberrabbitmq\\vehiculo\\vehiculo.api\\controllers\\vehiculocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|solutionrelative:vehiculo.api\\controllers\\vehiculocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|c:\\users\\user\\desktop\\universidad\\4to\\distribuidas\\deberrabbitmq\\vehiculo\\vehiculo.api\\data\\vehiculodbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|solutionrelative:vehiculo.api\\data\\vehiculodbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|c:\\users\\user\\desktop\\universidad\\4to\\distribuidas\\deberrabbitmq\\vehiculo\\vehiculo.api\\vehiculo.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{9A414D2C-F6C0-9813-930A-D37CAD356142}|Vehiculo.Api\\Vehiculo.Api.csproj|solutionrelative:vehiculo.api\\vehiculo.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Vehiculo.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Program.cs",
+              "RelativeToolTip": "Vehiculo.Api\\Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA1wBsAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T04:52:26.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "VehiculoController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Controllers\\VehiculoController.cs",
+              "RelativeDocumentMoniker": "Vehiculo.Api\\Controllers\\VehiculoController.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Controllers\\VehiculoController.cs",
+              "RelativeToolTip": "Vehiculo.Api\\Controllers\\VehiculoController.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAQwCUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T03:40:57.029Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Vehiculos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Models\\Vehiculos.cs",
+              "RelativeDocumentMoniker": "Vehiculo.Api\\Models\\Vehiculos.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Models\\Vehiculos.cs",
+              "RelativeToolTip": "Vehiculo.Api\\Models\\Vehiculos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T03:40:06.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "Vehiculo.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\appsettings.json",
+              "RelativeToolTip": "Vehiculo.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-25T04:56:13.282Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "VehiculoDBContext.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Data\\VehiculoDBContext.cs",
+              "RelativeDocumentMoniker": "Vehiculo.Api\\Data\\VehiculoDBContext.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Data\\VehiculoDBContext.cs",
+              "RelativeToolTip": "Vehiculo.Api\\Data\\VehiculoDBContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T03:40:37.444Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Vehiculo.Api.csproj",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Vehiculo.Api.csproj",
+              "RelativeDocumentMoniker": "Vehiculo.Api\\Vehiculo.Api.csproj",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Universidad\\4to\\distribuidas\\DeberRabbitMq\\Vehiculo\\Vehiculo.Api\\Vehiculo.Api.csproj",
+              "RelativeToolTip": "Vehiculo.Api\\Vehiculo.Api.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-08-25T03:38:33.343Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

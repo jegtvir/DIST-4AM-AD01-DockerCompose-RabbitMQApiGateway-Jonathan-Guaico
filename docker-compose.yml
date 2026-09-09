@@ -1,0 +1,119 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrongSaPassword123!
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "YourStrongSaPassword123!", "-C", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    entrypoint: >
+      bash -c "
+      echo 'Esperando a crear el login 4to_A...' &&
+      /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P 'YourStrongSaPassword123!' -C -Q \"IF NOT EXISTS (SELECT name FROM sys.server_principals WHERE name = '4to_A') BEGIN CREATE LOGIN [4to_A] WITH PASSWORD = '4to_A', CHECK_POLICY = OFF, CHECK_EXPIRATION = OFF; ALTER SERVER ROLE sysadmin ADD MEMBER [4to_A]; END\" &&
+      echo 'Login 4to_A creado exitosamente.'
+      "
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  seguridad-api:
+    image: seguridad-api:latest
+    container_name: seguridad-api
+    build:
+      context: ./Seguridad/Seguridad.Api
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__SeguridadConnection=Server=sqlserver;Database=Seguridad;User Id=4to_A;Password=4to_A;Encrypt=False;TrustServerCertificate=True
+      - Jwt__Key=JonaPruebaMqRabbit
+      - Jwt__Issuer=SeguridadApi
+      - Jwt__Audience=MicroserviciosDistribuidas
+    ports:
+      - "5260:8080"
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+
+  categoria-api:
+    image: categoria-api:latest
+    container_name: categoria-api
+    build:
+      context: ./Categoria/Categoria.Api
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__CategoriaConnection=Server=sqlserver;Database=Categoria;User Id=4to_A;Password=4to_A;Encrypt=False;TrustServerCertificate=True
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin123
+      - RabbitMQ__Port=5672
+      - Jwt__Key=JonaPruebaMqRabbit
+      - Jwt__Issuer=SeguridadApi
+      - Jwt__Audience=MicroserviciosDistribuidas
+    ports:
+      - "5259:8080"
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_started
+
+  vehiculo-api:
+    image: vehiculo-api:latest
+    container_name: vehiculo-api
+    build:
+      context: ./Vehiculo/Vehiculo.Api
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__VehiculoConnection=Server=sqlserver;Database=vehciulos;User Id=4to_A;Password=4to_A;Encrypt=False;TrustServerCertificate=True
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin123
+      - RabbitMQ__Port=5672
+      - Jwt__Key=JonaPruebaMqRabbit
+      - Jwt__Issuer=SeguridadApi
+      - Jwt__Audience=MicroserviciosDistribuidas
+    ports:
+      - "5258:8080"
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_started
+
+  apigateway:
+    image: apigateway:latest
+    container_name: apigateway
+    build:
+      context: ./ApiGateway/ApiGateway
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5119:8080"
+    depends_on:
+      - seguridad-api
+      - categoria-api
+      - vehiculo-api
