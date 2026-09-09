@@ -1,0 +1,122 @@
+================================================================================
+MEMORIA DE COMANDOS DE AZURE (MEMORIA_COMANDOS_AZURE.txt)
+Asignatura: Aplicaciones Distribuidas - 4to Nivel
+Proyecto: Sistema Distribuido con RabbitMQ, ApiGateway y Microservicios .NET
+Autor: Jonathan Guaico
+Fecha: Septiembre 2026
+================================================================================
+
+NOTA: Por seguridad y de acuerdo a la rúbrica, no se incluyen contraseñas ni 
+secretos reales. Se usan placeholders y nombres descriptivos.
+
+--------------------------------------------------------------------------------
+1. LOGIN Y VERIFICACIÓN
+--------------------------------------------------------------------------------
+az login
+az account list --output table
+az account set --subscription 
+az account show --output table
+
+--------------------------------------------------------------------------------
+2. RESOURCE GROUP
+--------------------------------------------------------------------------------
+RESOURCE_GROUP="vm-distribuidas"
+LOCATION="eastus"
+
+az group create --name $RESOURCE_GROUP --location $LOCATION --output table
+
+--------------------------------------------------------------------------------
+3. ACR (AZURE CONTAINER REGISTRY)
+--------------------------------------------------------------------------------
+ACR_NAME="vm-distribuidas"
+
+az acr create --resource-group $RESOURCE_GROUP --name $ACR_NAME --sku Basic --admin-enabled true
+az acr login --name $ACR_NAME
+
+--------------------------------------------------------------------------------
+4. IMÁGENES DOCKER
+--------------------------------------------------------------------------------
+az acr build --registry $ACR_NAME --image apigateway:latest ./ApiGateway/ApiGateway
+az acr build --registry $ACR_NAME --image seguridad-api:latest ./Seguridad/Seguridad.Api
+az acr build --registry $ACR_NAME --image categoria-api:latest ./Categoria/Categoria.Api
+az acr build --registry $ACR_NAME --image vehiculo-api:latest ./Vehiculo/Vehiculo.Api
+az acr repository list --name $ACR_NAME --output table
+
+--------------------------------------------------------------------------------
+5. AZURE SQL / SQL SERVER
+--------------------------------------------------------------------------------
+az sql server create --name $SQL_SERVER --resource-group $RESOURCE_GROUP --location $LOCATION --admin-user $SQL_ADMIN_USER --admin-password $SQL_ADMIN_PASSWORD
+az sql server firewall-rule create --resource-group $RESOURCE_GROUP --server $SQL_SERVER --name "AllowAllAzureIPs" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+az sql db create --resource-group $RESOURCE_GROUP --server $SQL_SERVER --name "Seguridad" --service-objective Basic
+az sql db create --resource-group $RESOURCE_GROUP --server $SQL_SERVER --name "categoria" --service-objective Basic
+az sql db create --resource-group $RESOURCE_GROUP --server $SQL_SERVER --name "vehciulos" --service-objective Basic
+
+--------------------------------------------------------------------------------
+6. DESPLIEGUE EN AZURE (MÁQUINA VIRTUAL UBUNTU + DOCKER COMPOSE)
+--------------------------------------------------------------------------------
+VM_NAME="vm-distribuidas"
+VM_USER="jonaazure"
+
+# Crear la Máquina Virtual en Azure
+az vm create --resource-group $RESOURCE_GROUP --name $VM_NAME --image Ubuntu2204 --admin-username $VM_USER --generate-ssh-keys --public-ip-sku Standard --size Standard_B2s
+
+# Consultar IP Pública asignada (IP Actual en Azure: 158.23.165.154)
+az vm list-ip-addresses --resource-group $RESOURCE_GROUP --name $VM_NAME --output table
+
+# Abrir puertos requeridos en el Grupo de Seguridad de Red (NSG)
+az network nsg rule create --resource-group $RESOURCE_GROUP --nsg-name "${VM_NAME}NSG" --name "Allow_ApiGateway" --priority 1000 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 5119
+az network nsg rule create --resource-group $RESOURCE_GROUP --nsg-name "${VM_NAME}NSG" --name "Allow_Seguridad" --priority 1010 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 5260
+az network nsg rule create --resource-group $RESOURCE_GROUP --nsg-name "${VM_NAME}NSG" --name "Allow_Categoria" --priority 1020 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 5259
+az network nsg rule create --resource-group $RESOURCE_GROUP --nsg-name "${VM_NAME}NSG" --name "Allow_Vehiculo" --priority 1030 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 5258
+az network nsg rule create --resource-group $RESOURCE_GROUP --nsg-name "${VM_NAME}NSG" --name "Allow_RabbitMQ_UI" --priority 1040 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 15672
+az network nsg rule create --resource-group $RESOURCE_GROUP --nsg-name "${VM_NAME}NSG" --name "Allow_RabbitMQ_AMQP" --priority 1050 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 5672
+
+# Conexión SSH e Instalación de Docker en Azure
+ssh $VM_USER@158.23.165.154
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+newgrp docker
+
+--------------------------------------------------------------------------------
+7. VARIABLES Y DESPLIEGUE CON DOCKER COMPOSE
+--------------------------------------------------------------------------------
+git clone https://github.com/jegtvir/DIST-4AM-AD01-DockerCompose-RabbitMQApiGateway-Jonathan-Guaico.git
+cd DIST-4AM-AD01-DockerCompose-RabbitMQApiGateway-Jonathan-Guaico
+
+docker compose up -d --build
+docker compose ps
+docker compose logs -f
+
+--------------------------------------------------------------------------------
+8. PRUEBAS DE SERVICIOS EN AZURE
+--------------------------------------------------------------------------------
+# Swagger Seguridad
+curl -I http://158.23.165.154:5260/swagger/index.html
+
+# Login y obtención de Token JWT
+curl -X POST http://158.23.165.154:5260/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "Admin123*"}'
+
+# Petición autenticada a Categorías
+curl -X GET http://158.23.165.154:5259/api/Categoria \
+  -H "Authorization: Bearer <TOKEN_JWT>"
+
+# Petición autenticada a Vehículos
+curl -X GET http://158.23.165.154:5258/api/Vehiculo \
+  -H "Authorization: Bearer <TOKEN_JWT>"
+
+# Verificación de RabbitMQ
+curl -I http://158.23.165.154:15672/
+
+--------------------------------------------------------------------------------
+9. ELIMINACIÓN DE RECURSOS EN AZURE
+--------------------------------------------------------------------------------
+# Detener contenedores
+docker compose down -v
+
+# Eliminar Resource Group completo en Azure
+az group delete --name rg-distribuidas-rabbitmq --yes --no-wait
+================================================================================
