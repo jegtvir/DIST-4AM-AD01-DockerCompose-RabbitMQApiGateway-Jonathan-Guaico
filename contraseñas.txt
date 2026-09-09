@@ -1,0 +1,31 @@
+azure user
+us:jonaazure
+pass:azuredistribuidasnuevo12*
+
+ssh usuario@<IP_PUBLICA_DE_TU_VM>
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+   sudo sh get-docker.sh
+   sudo usermod -aG docker $USER
+   newgrp docker
+
+git init
+git add .
+git commit -m "Primer commit"
+git branch -M main
+git remote add origin <URL-de-tu-repositorio>
+git push -u origin main
+
+git clone DIST-4AM-AD01-DockerCompose-RabbitMQApiGateway-Jonathan-Guaico
+cd DIST-4AM-AD01-DockerCompose-RabbitMQApiGateway-Jonathan-Guaico
+docker compose up -d --build
+
+
+jonaazure@158.23.165.154
+
+
+ **Seguridad:** `http://158.23.165.154:5260/swagger`
+- **Categoría:** `http://158.23.165.154:5259/swagger`
+- **Vehículo:** `http://158.23.165.154:5258/swagger`
+- **ApiGateway:** `http://158.23.165.154:5119/api/...`
+- **RabbitMQ Dashboard:** `http://158.23.165.154:15672`
